@@ -1,3 +1,4 @@
+from copy import copy
 
 def showCircle(circle):
   print('#####Circle#####\n')
@@ -13,6 +14,13 @@ def showRect(rect):
   print("\ncorner x:", rect.corner.x)
   print("corner y %d" % rect.corner.y)
   print('################\n\n')
+
+
+def move_copy_point(point, x, y):
+  c_point = copy(point)
+  c_point.x += x
+  c_point.y += y
+  return c_point
 
 
 def move_rectangle(rect, dx, dy):
@@ -38,7 +46,17 @@ def point_in_circle(circle, point):
   else:
     return False
 
-def rect_4_point(rect):
-  p1 = 
+def rect_4_points(rect):
+  p1 = copy(rect.corner)
+  p2 = move_copy_point(p1, rect.width, 0)
+  p3 = move_copy_point(p1, 0, rect.height)
+  p4 = move_copy_point(p1, rect.width, rect.height)
+
+  return p1, p2, p3, p4
+  
 
 def rect_in_circle(circle, rect):
+  for point in rect_4_points(rect):
+    if distance_point(point, circle.center) > circle.radius:
+      return False
+  return True
